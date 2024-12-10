@@ -171,60 +171,61 @@ export default function ChatArea({ conversation, onUpdateConversation }: ChatAre
   return (
     <ErrorBoundary>
       <div className="flex-1 flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto space-y-4 py-4">
-          {conversation?.messages.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-center px-4">
-              <h1 className="text-4xl font-bold mb-8">How can I help you today?</h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
-                {suggestedQueries.map((query, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setMessage(query);
-                      // Optional: Auto-submit the query
-                      // handleSubmit(new Event('submit') as any);
-                    }}
-                    className="p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  >
-                    {query}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <>
-              {conversation?.messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className="flex justify-start"
-                >
-                  <div className="group relative max-w-[85%]">
-                    <div
-                      className={`rounded-lg p-3 ${
-                        msg.role === 'user'
-                          ? 'bg-blue-500 text-white ml-auto'
-                          : 'bg-white dark:bg-gray-800 prose dark:prose-invert prose-sm'
-                      }`}
-                    >
-                      {msg.role === 'user' ? (
-                        msg.content
-                      ) : (
-                        <div className="flex items-start">
-                          <RobotIcon />
-                          <div className="flex-1">
-                            <ReactMarkdown>{msg.content}</ReactMarkdown>
-                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <CopyButton text={msg.content} />
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
+	  <div className="flex-1 w-full overflow-y-auto space-y-4 py-4">
+		{conversation?.messages.length === 0 ? (
+			<div className="h-full flex flex-col items-center justify-center text-center px-4">
+			<h1 className="text-4xl font-bold mb-8">How can I help you today?</h1>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
+				{suggestedQueries.map((query, index) => (
+				<button
+					key={index}
+					onClick={() => {
+					setMessage(query);
+					}}
+					className="p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+				>
+					{query}
+				</button>
+				))}
+			</div>
+			</div>
+		) : (
+			<>
+			{conversation?.messages.map((msg) => (
+				<div
+				key={msg.id}
+				className="flex justify-center w-full px-4"
+				>
+				<div
+					className="group relative max-w-2xl w-full"
+				>
+					<div
+					className={`rounded-lg p-3 ${
+						msg.role === 'user'
+						? 'bg-blue-500 text-white ml-auto'
+						: 'bg-white dark:bg-gray-800 prose dark:prose-invert prose-sm'
+					}`}
+					style={{ maxWidth: '100%' }}
+					>
+					{msg.role === 'user' ? (
+						msg.content
+					) : (
+						<div className="flex items-start">
+						<RobotIcon />
+						<div className="flex-1">
+							<ReactMarkdown>{msg.content}</ReactMarkdown>
+							<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+							<CopyButton text={msg.content} />
+						</div>
+						</div>
+						</div>
+					)}
+					</div>
+				</div>
+				</div>
+			))}
+			</>
+		)}
           {isLoading && !isStreaming && (
             <div className="flex justify-start">
               <div className="bg-gray-200 dark:bg-gray-700 rounded-lg p-3">
@@ -241,35 +242,35 @@ export default function ChatArea({ conversation, onUpdateConversation }: ChatAre
           )}
           <div ref={messagesEndRef} />
         </div>
-        <form onSubmit={handleSubmit} className="p-4 border-t dark:border-gray-800">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-1 p-2 rounded-lg border dark:border-gray-700 dark:bg-gray-800"
-              disabled={isStreaming}
-            />
-            {isStreaming ? (
-              <button
-                type="button"
-                onClick={handleStopGeneration}
-                className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-              >
-                Stop
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={!message.trim() || isLoading}
-                className="p-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
-              >
-                <Send size={20} />
-              </button>
-            )}
-          </div>
-        </form>
+		<form onSubmit={handleSubmit} className="p-4 border-t dark:border-gray-800">
+		<div className="flex gap-2 justify-center items-center">
+			<input
+			type="text"
+			value={message}
+			onChange={(e) => setMessage(e.target.value)}
+			placeholder="Type a message..."
+			className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 focus:ring focus:ring-blue-500 focus:outline-none w-full max-w-2xl"
+			disabled={isStreaming}
+			/>
+			{isStreaming ? (
+			<button
+				type="button"
+				onClick={handleStopGeneration}
+				className="p-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+			>
+				Stop
+			</button>
+			) : (
+			<button
+				type="submit"
+				disabled={!message.trim() || isLoading}
+				className="p-3 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
+			>
+				<Send size={20} />
+			</button>
+			)}
+		</div>
+		</form>
       </div>
     </ErrorBoundary>
   );
