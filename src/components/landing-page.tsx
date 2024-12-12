@@ -59,7 +59,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
       <h1 className="text-4xl font-bold mb-6 text-gray-800 dark:text-white">
-        {isSignup ? "Sign Up" : "Login"} to AI Chat App
+        {isSignup ? "Sign Up" : "Login"} to Daria's AI Chat App
       </h1>
       <form
         onSubmit={handleAuth}
