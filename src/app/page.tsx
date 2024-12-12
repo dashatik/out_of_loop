@@ -1,10 +1,8 @@
+"use client";
+
 import React from "react";
-import ChatLayout from "@/components/chat-layout";
+import LandingPage from "@/components/landing-page";
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col">
-      <ChatLayout />
-    </main>
-  );
-} 
+  return <LandingPage />;
+}

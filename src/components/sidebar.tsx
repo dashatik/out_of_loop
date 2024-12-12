@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Conversation } from "@/types";
-import { PlusCircle, Menu, Pin, Trash2 } from "lucide-react";
+import { PlusCircle, Menu, Pin, Trash2, Edit2, Check, X } from "lucide-react";
 
 interface SidebarProps {
   conversations: Conversation[];
@@ -25,6 +25,9 @@ export default function Sidebar({
   isCollapsed,
   onToggleCollapse,
 }: SidebarProps) {
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [newTitle, setNewTitle] = useState<string>("");
+
   const sortedConversations = React.useMemo(() => {
     return [...conversations].sort((a, b) => {
       if (a.pinned && !b.pinned) return -1;
@@ -32,6 +35,15 @@ export default function Sidebar({
       return b.updatedAt - a.updatedAt;
     });
   }, [conversations]);
+
+  const handleRenameConversation = (id: string) => {
+    const updatedConversations = conversations.map((conv) =>
+      conv.id === id ? { ...conv, title: newTitle || conv.title } : conv
+    );
+    onUpdateConversations(updatedConversations);
+    setEditingId(null);
+    setNewTitle("");
+  };
 
   return (
     <div
@@ -88,16 +100,47 @@ export default function Sidebar({
                     : ""
                 }`}
               >
-                <button
-                  onClick={() => onSelectConversation(conversation)}
-                  className="flex-1 text-left truncate"
-                >
-                  <div className="flex items-center gap-2">
-                    {conversation.pinned && <Pin size={12} />}
-                    <span className="truncate">{conversation.title}</span>
-                  </div>
-                </button>
+				{editingId === conversation.id ? (
+				<input
+					type="text"
+					value={newTitle}
+					onChange={(e) => setNewTitle(e.target.value)}
+					onKeyDown={(e) => {
+					if (e.key === "Enter") {
+						handleRenameConversation(conversation.id); // Save on Enter
+					} else if (e.key === "Escape") {
+						setEditingId(null); // Cancel on Escape
+						setNewTitle("");
+					}
+					}}
+					onBlur={() => {
+					handleRenameConversation(conversation.id); // Save on blur
+					}}
+					placeholder="Enter new title"
+					className="flex-1 p-1 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 w-full max-w-full text-sm"
+					autoFocus
+				/>
+				) : (
+				<button
+					onDoubleClick={() => {
+					setEditingId(conversation.id); // Enable edit mode on double-click
+					setNewTitle(conversation.title); // Populate input with the current title
+					}}
+					className="flex-1 text-left truncate"
+				>
+					<div className="flex items-center gap-2">
+					{conversation.pinned && <Pin size={12} />}
+					<span className="truncate">{conversation.title}</span>
+					</div>
+				</button>
+				)}
                 <div className="opacity-0 group-hover:opacity-100 flex gap-1">
+                  <button
+                    onClick={() => setEditingId(conversation.id)}
+                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                  >
+                    <Edit2 size={14} />
+                  </button>
                   <button
                     onClick={() => onPinConversation(conversation.id)}
                     className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
@@ -122,3 +165,4 @@ export default function Sidebar({
     </div>
   );
 }
+
