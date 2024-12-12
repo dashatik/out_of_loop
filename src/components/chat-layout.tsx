@@ -1,12 +1,10 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import Sidebar from "./sidebar";
 import ChatArea from "./chat-area";
 import SettingsPanel from "./settings-panel";
 import { Conversation } from "@/types";
-import { Settings } from "lucide-react";
 import { loadConversations, saveConversations } from "@/lib/storage";
+import { Settings } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
 
 export default function ChatLayout() {
@@ -16,6 +14,7 @@ export default function ChatLayout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
+    // Load conversations when the component mounts
     const savedConversations = loadConversations();
     setConversations(savedConversations);
     if (savedConversations.length > 0) {
@@ -24,7 +23,7 @@ export default function ChatLayout() {
   }, []);
 
   const handleUpdateConversation = (updatedConversation: Conversation) => {
-    const newConversations = conversations.map(conv =>
+    const newConversations = conversations.map((conv) =>
       conv.id === updatedConversation.id ? updatedConversation : conv
     );
     setConversations(newConversations);
@@ -33,7 +32,7 @@ export default function ChatLayout() {
   };
 
   const handleDeleteConversation = (id: string) => {
-    const newConversations = conversations.filter(conv => conv.id !== id);
+    const newConversations = conversations.filter((conv) => conv.id !== id);
     setConversations(newConversations);
     saveConversations(newConversations);
     if (selectedConversation?.id === id) {
@@ -42,7 +41,7 @@ export default function ChatLayout() {
   };
 
   const handlePinConversation = (id: string) => {
-    const newConversations = conversations.map(conv =>
+    const newConversations = conversations.map((conv) =>
       conv.id === id ? { ...conv, pinned: !conv.pinned } : conv
     );
     setConversations(newConversations);
