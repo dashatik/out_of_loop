@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.120.4",
+    "@react-three/fiber": "^8.17.10",
     "ai": "^4.0.13",
     "cookie": "^0.4.2",
     "firebase": "^11.0.2",
+    "framer-motion": "^11.14.4",
     "https-proxy-agent": "^7.0.6",
     "lucide-react": "^0.309.0",
     "next": "^13.5.2",
@@ -22,6 +25,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-markdown": "^9.0.1",
     "supports-color": "^9.4.0",
+    "three": "^0.171.0",
     "vercel": "^32.3.0"
   },
   "devDependencies": {
@@ -30,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.170.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
