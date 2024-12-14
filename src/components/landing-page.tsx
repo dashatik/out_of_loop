@@ -36,7 +36,7 @@ export default function LandingPage() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200 dark:from-gray-900 dark:to-black px-4">
       {/* 3D Animation Section */}
       <motion.div
-        className="w-full lg:w-1/2 h-64 lg:h-full flex flex-col items-center justify-center text-center"
+        className="w-full lg:w-1/2 h-96 sm:h-64 flex flex-col items-center justify-center text-center"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -46,7 +46,7 @@ export default function LandingPage() {
           Why waste time arguing with ChatGPT?
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mt-2">
-          This app is designed to <strong>help you craft the perfect prompts</strong>, so you can save time and avoid the hustle
+          This app is designed with <strong>integrated perfect prompts</strong>, so you can save time and avoid the hustle
           of arguing over specifics.
         </p>
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 italic">
