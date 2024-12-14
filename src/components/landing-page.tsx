@@ -43,7 +43,7 @@ export default function LandingPage() {
       >
         <Emoji3D />
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mt-6">
-          Why waste time arguing with ChatGPT?
+          Why waste time arguing with AI?
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mt-2">
           This app is designed with <strong>integrated perfect prompts</strong>, so you can save time and avoid the hustle
