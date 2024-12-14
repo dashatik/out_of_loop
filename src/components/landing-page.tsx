@@ -36,7 +36,7 @@ export default function LandingPage() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200 dark:from-gray-900 dark:to-black px-4">
       {/* 3D Animation Section */}
       <motion.div
-        className="w-full lg:w-1/2 h-96 sm:h-60 flex flex-col items-center justify-center text-center"
+        className="w-full lg:w-1/2 h-96 sm:h-60 mt-4 flex flex-col items-center justify-center text-center"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -52,7 +52,7 @@ export default function LandingPage() {
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 italic">
           "Forget arguing. Forget explaining. Just win."
         </p>
-        <p className="mt-4 text-xs text-gray-400 dark:text-gray-600">
+        <p className="mt-4 mb-8 text-xs text-gray-400 dark:text-gray-600">
           All rights reserved by Daria T.
         </p>
       </motion.div>
@@ -64,7 +64,7 @@ export default function LandingPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
-        <h1 className="text-5xl font-extrabold mb-6 text-gray-800 dark:text-white">
+        <h1 className="text-5xl font-extrabold mb-8 text-gray-800 dark:text-white">
           Out of <span className="text-indigo-600">Loop</span>
         </h1>
         <p className="text-lg mb-8 text-gray-600 dark:text-gray-300">
@@ -127,7 +127,7 @@ export default function LandingPage() {
         </form>
 
         {/* Toggle Signup/Login */}
-        <p className="mt-4 text-gray-600 dark:text-gray-300">
+        <p className="mt-4 mb-8 text-gray-600 dark:text-gray-300">
           {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
           <button
             onClick={() => setIsSignup(!isSignup)}
