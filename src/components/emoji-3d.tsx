@@ -5,7 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { TextureLoader } from "three";
 
-const LogoPlane = ({ logo }: { logo: string }) => {
+const LogoPlane = ({ logo, scale }: { logo: string; scale: number }) => {
   const planeRef = React.useRef<any>();
   const [texture, setTexture] = useState<any>();
 
@@ -24,7 +24,7 @@ const LogoPlane = ({ logo }: { logo: string }) => {
   });
 
   return (
-    <mesh ref={planeRef}>
+    <mesh ref={planeRef} scale={[scale, scale, scale]}>
       <planeGeometry args={[3, 3]} />
       {texture && (
         <meshBasicMaterial
@@ -39,10 +39,25 @@ const LogoPlane = ({ logo }: { logo: string }) => {
 
 const Logo3D = () => {
   const [logo, setLogo] = useState("/logos/chatgpt.png");
+  const [scale, setScale] = useState(1); // Default scale
   const logos = [
     "/logos/chatgpt.png", // Path to ChatGPT logo
     "/logos/claude.png", // Path to Claude logo
   ];
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setScale(1.5); // Larger scale for smaller screens
+      } else {
+        setScale(1); // Default scale for larger screens
+      }
+    };
+
+    handleResize(); // Set initial scale
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,7 +73,7 @@ const Logo3D = () => {
     >
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
-      <LogoPlane logo={logo} />
+      <LogoPlane logo={logo} scale={scale} />
       <OrbitControls />
     </Canvas>
   );
