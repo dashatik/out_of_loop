@@ -7,14 +7,13 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
-const Emoji3D = dynamic(() => import("./emoji-3d"), { ssr: false }); // Dynamically import 3D emoji
+const Emoji3D = dynamic(() => import("./emoji-3d"), { ssr: false }); // Dynamically import 3D logos
 
 export default function LandingPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState("");
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // State for popup
   const router = useRouter();
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -37,12 +36,25 @@ export default function LandingPage() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200 dark:from-gray-900 dark:to-black px-4">
       {/* 3D Animation Section */}
       <motion.div
-        className="w-full lg:w-1/2 h-64 lg:h-full flex items-center justify-center"
+        className="w-full lg:w-1/2 h-64 lg:h-full flex flex-col items-center justify-center text-center"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Emoji3D />
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mt-6">
+          Why waste time arguing with ChatGPT?
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mt-2">
+          This app is designed to <strong>help you craft the perfect prompts</strong>, so you can save time and avoid the hustle
+          of arguing over specifics.
+        </p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 italic">
+          "Forget arguing. Forget explaining. Just win."
+        </p>
+        <p className="mt-4 text-xs text-gray-400 dark:text-gray-600">
+          All rights reserved by Daria T.
+        </p>
       </motion.div>
 
       {/* Content Section */}
@@ -124,41 +136,6 @@ export default function LandingPage() {
             {isSignup ? "Login" : "Sign Up"}
           </button>
         </p>
-
-        {/* Fun Popup Button */}
-        <button
-          onClick={() => setIsPopupOpen(true)}
-          className="mt-6 px-4 py-2 bg-indigo-500 text-white text-sm rounded-lg hover:bg-indigo-600 transition"
-        >
-          What's this app about?
-        </button>
-
-        {/* Fun Popup */}
-        {isPopupOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center max-w-lg">
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-                Why waste time arguing with ChatGPT?
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                This app is designed to <strong>help you craft the perfect prompts</strong>, so you can save time and avoid the hustle
-                of arguing over specifics.
-              </p>
-              <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 italic">
-                "Forget arguing. Forget explaining. Just win."
-              </p>
-              <p className="mt-4 text-xs text-gray-400 dark:text-gray-600">
-                All rights reserved by Daria T.
-              </p>
-              <button
-                onClick={() => setIsPopupOpen(false)}
-                className="mt-6 px-4 py-2 bg-indigo-500 text-white text-sm rounded-lg hover:bg-indigo-600 transition"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
       </motion.div>
     </div>
   );

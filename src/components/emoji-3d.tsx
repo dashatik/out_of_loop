@@ -5,28 +5,17 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { TextureLoader } from "three";
 
-const EmojiPlane = ({ emoji }: { emoji: string }) => {
+const LogoPlane = ({ logo }: { logo: string }) => {
   const planeRef = React.useRef<any>();
   const [texture, setTexture] = useState<any>();
 
-  // Create an emoji canvas and load it as a texture
+  // Load logo as texture
   useEffect(() => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      canvas.width = 256;
-      canvas.height = 256;
-      ctx.font = "200px serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(emoji, canvas.width / 2, canvas.height / 2);
-
-      const loader = new TextureLoader();
-      loader.load(canvas.toDataURL(), (loadedTexture) => {
-        setTexture(loadedTexture);
-      });
-    }
-  }, [emoji]);
+    const loader = new TextureLoader();
+    loader.load(logo, (loadedTexture) => {
+      setTexture(loadedTexture);
+    });
+  }, [logo]);
 
   useFrame(() => {
     if (planeRef.current) {
@@ -48,16 +37,19 @@ const EmojiPlane = ({ emoji }: { emoji: string }) => {
   );
 };
 
-const Emoji3D = () => {
-  const [emoji, setEmoji] = useState("😀");
-  const emojis = ["😀", "😂", "😎", "🤔", "🥳", "😍", "😡"];
+const Logo3D = () => {
+  const [logo, setLogo] = useState("/logos/chatgpt.png");
+  const logos = [
+    "/logos/chatgpt.png", // Path to ChatGPT logo
+    "/logos/claude.png", // Path to Claude logo
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setEmoji(emojis[Math.floor(Math.random() * emojis.length)]);
-    }, 2000); // Change emoji every 2 seconds
+      setLogo(logos[Math.floor(Math.random() * logos.length)]);
+    }, 2000); // Change logo every 2 seconds
     return () => clearInterval(interval); // Cleanup interval
-  }, [emojis]);
+  }, [logos]);
 
   return (
     <Canvas
@@ -66,10 +58,10 @@ const Emoji3D = () => {
     >
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
-      <EmojiPlane emoji={emoji} />
+      <LogoPlane logo={logo} />
       <OrbitControls />
     </Canvas>
   );
 };
 
-export default Emoji3D;
+export default Logo3D;
