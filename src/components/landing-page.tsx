@@ -36,7 +36,7 @@ export default function LandingPage() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200 dark:from-gray-900 dark:to-black px-4">
       {/* 3D Animation Section */}
       <motion.div
-        className="w-full lg:w-1/2 h-96 sm:h-64 flex flex-col items-center justify-center text-center"
+        className="w-full lg:w-1/2 h-96 sm:h-60 flex flex-col items-center justify-center text-center"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
