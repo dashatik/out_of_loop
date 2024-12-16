@@ -4,4 +4,33 @@
 
 body {
   @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+  font-family: 'Uni Sans', sans-serif;
 } 
+
+@font-face {
+  font-family: 'UniSansThin';
+  src: url('/fonts/Uni-Sans-Thin.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UniSansItalic';
+  src: url('/fonts/Uni-Sans-Thin-Italic.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UniSansBold';
+  src: url('/fonts/Uni-Sans-Heavy.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UniSansBoldItalic';
+  src: url('/fonts/Uni-Sans-Heavy-Italic.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}

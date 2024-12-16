@@ -1,10 +1,7 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import ClientWrapper from "@/components/client-wrapper";
 import PageRouter from "@/components/page-router";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "AI Chat Application",
@@ -18,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className="font-uniSans">
         <ClientWrapper>
           <ThemeProvider
             attribute="class"

@@ -90,7 +90,7 @@ export default function Sidebar({
           </div>
 
           {/* Conversations List */}
-          <div className="overflow-y-auto">
+          <div className="overflow-y-auto max-h-[calc(100vh-8rem)]">
             {sortedConversations.map((conversation) => (
               <div
                 key={conversation.id}

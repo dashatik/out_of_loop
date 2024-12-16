@@ -3,24 +3,27 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import IntroPage from "@/components/intro-page";
 import LandingPage from "@/components/landing-page";
 import { useRouter, usePathname } from "next/navigation";
 
 export default function PageRouter({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null); // Correctly typed
+  const [user, setUser] = useState<User | null>(null); // Track user authentication
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser); // Updates user state with User or null
+      setUser(currentUser); // Update user state
       setLoading(false);
 
-      if (!currentUser && pathname !== "/") {
-        router.push("/"); // Redirect unauthenticated users to the landing page
-      } else if (currentUser && pathname === "/") {
-        router.push("/chat"); // Redirect authenticated users to chat
+      if (pathname === "/landing-page") {
+        if (currentUser) {
+          router.push("/chat"); // Redirect authenticated users to chat
+        }
+      } else if (pathname === "/chat" && !currentUser) {
+        router.push("/landing-page"); // Redirect unauthenticated users to landing-page
       }
     });
 
@@ -35,10 +38,14 @@ export default function PageRouter({ children }: { children: React.ReactNode }) 
     ); // Prevent rendering during auth state loading
   }
 
-  if (!user && pathname === "/") {
-    return <LandingPage />;
+  if (pathname === "/") {
+    return <IntroPage />; // Display IntroPage for root path
   }
 
-  return <>{children}</>;
+  if (pathname === "/landing-page" && !user) {
+    return <LandingPage />; // Show LandingPage for unauthenticated users
+  }
+
+  return <>{children}</>; // Render other content if authenticated
 }
 

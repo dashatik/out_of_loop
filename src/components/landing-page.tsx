@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { auth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -36,13 +37,13 @@ export default function LandingPage() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200 dark:from-gray-900 dark:to-black px-4">
       {/* 3D Animation Section */}
       <motion.div
-        className="w-full lg:w-1/2 h-96 sm:h-60 mt-4 flex flex-col items-center justify-center text-center"
+        className="w-full lg:w-1/2 h-[400px] sm:h-60 lg:h-[600px] sm:mt-4 flex flex-col items-center justify-center text-center"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Emoji3D />
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mt-6">
+        <h2 className="text-2xl font-bold sm:mt-2 text-gray-800 dark:text-white">
           Why waste time arguing with AI?
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mt-2">
@@ -65,7 +66,9 @@ export default function LandingPage() {
         transition={{ duration: 0.8, delay: 0.3 }}
       >
         <h1 className="text-5xl font-extrabold mb-8 text-gray-800 dark:text-white">
-          Out of <span className="text-indigo-600">Loop</span>
+          <Link href="/" className="hover:text-indigo-600 transition">
+            Out of <span className="text-indigo-600">Loop</span>
+          </Link>
         </h1>
         <p className="text-lg mb-8 text-gray-600 dark:text-gray-300">
           {isSignup
