@@ -104,7 +104,7 @@ export default function IntroPage() {
         </div>
 
         {/* Vertical Text */}
-        <div className=" text-gray-400 absolute font-uniSans -left-16 top-40 -translate-y-1/2 -rotate-90 text-xs uppercase font-semibold tracking-wider z-10 lg:top-96">
+        <div className=" text-gray-400 absolute font-uniSans -left-16 top-48 -translate-y-1/2 -rotate-90 text-xs uppercase font-semibold tracking-wider z-10 lg:top-96">
             Best Platform № One
         </div>
         <div className="text-gray-400 absolute -right-32 bottom-36 -rotate-90 text-xs uppercase font-semibold tracking-wider z-10">
