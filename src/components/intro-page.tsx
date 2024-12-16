@@ -89,7 +89,7 @@ export default function IntroPage() {
         </div>
 
         {/* Bottom Section (Hands Image) */}
-        <div className="absolute top-60 pt-36 bottom-0 -left-72 flex justify-center items-center overflow-hidden lg:top-16 lg: lg:pt:20 lg:-left-24 ">
+        <div className="absolute top-64 pt-36 bottom-0 -left-64 flex justify-center items-center overflow-hidden lg:top-16 lg: lg:pt:20 lg:-left-24 ">
           <Image
             src="/images/hands.png"
             alt="Hands Image"
