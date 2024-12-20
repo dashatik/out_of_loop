@@ -12,30 +12,14 @@ export default function ChatLayout() {
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [bottomPadding, setBottomPadding] = useState(0);
 
   useEffect(() => {
-    // Load conversations when the component mounts
     const savedConversations = loadConversations();
     setConversations(savedConversations);
     if (savedConversations.length > 0) {
       setSelectedConversation(savedConversations[0]);
     }
   }, []);
-
-  useEffect(() => {
-    // Listen for viewport changes to adjust for the keyboard
-    const handleResize = () => {
-      if (window.visualViewport) {
-        const viewportHeight = window.visualViewport.height;
-        const windowHeight = window.innerHeight;
-        setBottomPadding(windowHeight - viewportHeight); // Set padding equal to keyboard height
-      }
-    };
-    window.visualViewport?.addEventListener("resize", handleResize);
-    return () => window.visualViewport?.removeEventListener("resize", handleResize);
-  }, []);
-
 
   const handleUpdateConversation = (updatedConversation: Conversation) => {
     const newConversations = conversations.map((conv) =>
@@ -64,7 +48,7 @@ export default function ChatLayout() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden relative">
       {/* Sidebar */}
       <div
         className={`transition-all duration-300 ${
@@ -86,8 +70,17 @@ export default function ChatLayout() {
         />
       </div>
 
+      {/* Overlay for Small Screens */}
+      {!isSidebarCollapsed && (
+        <div className="fixed inset-0 bg-opacity-60 z-10 lg:hidden pointer-events-none"></div>
+      )}
+
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div
+        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+          !isSidebarCollapsed && "lg:blur-none blur-sm lg:pointer-events-auto pointer-events-none"
+        }`}
+      >
         {/* Header */}
         <div className="p-4 flex justify-between items-center">
           <h1 className="text-xl font-semibold">
@@ -105,12 +98,11 @@ export default function ChatLayout() {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 bg-gray-50 dark:bg-gray-900 overflow-hidden"
-            style={{ paddingBottom: `${bottomPadding}px` }} // Adjust for keyboard
-        >
+        <div className="flex-1 bg-gray-50 dark:bg-gray-900 overflow-hidden">
           <ChatArea
             conversation={selectedConversation}
             onUpdateConversation={handleUpdateConversation}
+            isSidebarCollapsed={isSidebarCollapsed}
           />
         </div>
       </div>
