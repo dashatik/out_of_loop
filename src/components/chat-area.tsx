@@ -268,7 +268,7 @@ export default function ChatArea({ conversation, onUpdateConversation }: ChatAre
     <button
       type="submit"
       disabled={!message.trim() || isLoading}
-      className="absolute right-6 p-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
+      className="absolute right-4 lg:right-48 p-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
       style={{ marginBottom: "8px" }} // Align with bottom of textarea
     >
       <Send size={20} />
