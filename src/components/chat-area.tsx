@@ -262,7 +262,7 @@ export default function ChatArea({ conversation, onUpdateConversation }: ChatAre
       className="resize-none w-full max-w-2xl rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 p-3 pr-10 focus:ring focus:ring-blue-500 focus:outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
       style={{
         overflowY: "auto", // Scroll only when exceeding max height
-        maxHeight: "350px", // Limit maximum height to 6.5 lines
+        maxHeight: "160px", // Limit maximum height to 6.5 lines
       }}
     />
     <button
