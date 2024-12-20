@@ -172,61 +172,62 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
   return (
     <ErrorBoundary>
       <div className="flex-1 flex flex-col h-full">
-	  <div className="flex-1 w-full overflow-y-auto space-y-4 py-4">
-		{conversation?.messages.length === 0 ? (
-			<div className="h-full flex flex-col items-center justify-center text-center px-4">
-			<h1 className="text-4xl font-bold mb-8">How can I help you today?</h1>
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
-				{suggestedQueries.map((query, index) => (
-				<button
-					key={index}
-					onClick={() => {
-					setMessage(query);
-					}}
-					className="p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-				>
-					{query}
-				</button>
-				))}
-			</div>
-			</div>
-		) : (
-			<>
-			{conversation?.messages.map((msg) => (
-				<div
-				key={msg.id}
-				className="flex justify-center w-full px-4"
-				>
-				<div
-					className="group relative max-w-2xl w-full"
-				>
-					<div
-					className={`rounded-lg p-3 ${
-						msg.role === 'user'
-						? 'bg-blue-500 text-white ml-auto'
-						: 'bg-white dark:bg-gray-800 prose dark:prose-invert prose-sm'
-					}`}
-					style={{ maxWidth: '100%' }}
-					>
-					{msg.role === 'user' ? (
-						msg.content
-					) : (
-						<div className="flex items-start">
-						<RobotIcon />
-						<div className="flex-1">
-							<ReactMarkdown>{msg.content}</ReactMarkdown>
-							<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-							<CopyButton text={msg.content} />
-						</div>
-						</div>
-						</div>
-					)}
-					</div>
-				</div>
-				</div>
-			))}
-			</>
-		)}
+        {/* Chat Messages Area */}
+        <div
+          className="flex-1 w-full overflow-y-auto space-y-4 py-4"
+          style={{
+            height: "calc(100vh - 64px)", // Reserve space for the text area and header
+          }}
+        >
+          {conversation?.messages.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-center px-4">
+              <h1 className="text-4xl font-bold mb-8">How can I help you today?</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
+                {suggestedQueries.map((query, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setMessage(query);
+                    }}
+                    className="p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    {query}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <>
+              {conversation?.messages.map((msg) => (
+                <div key={msg.id} className="flex justify-center w-full px-4">
+                  <div className="group relative max-w-2xl w-full">
+                    <div
+                      className={`rounded-lg p-3 ${
+                        msg.role === "user"
+                          ? "bg-blue-500 text-white ml-auto"
+                          : "bg-white dark:bg-gray-800 prose dark:prose-invert prose-sm"
+                      }`}
+                      style={{ maxWidth: "100%" }}
+                    >
+                      {msg.role === "user" ? (
+                        msg.content
+                      ) : (
+                        <div className="flex items-start">
+                          <RobotIcon />
+                          <div className="flex-1">
+                            <ReactMarkdown>{msg.content}</ReactMarkdown>
+                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <CopyButton text={msg.content} />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
           {isLoading && !isStreaming && (
             <div className="flex justify-start">
               <div className="bg-gray-200 dark:bg-gray-700 rounded-lg p-3">
@@ -243,43 +244,46 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
           )}
           <div ref={messagesEndRef} />
         </div>
-            <form onSubmit={handleSubmit} className="p-4 ">
-      <div className="relative flex gap-2 justify-center items-end">
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault(); // Submit the form when Enter is pressed
-              handleSubmit(e as unknown as React.FormEvent);
-            }
-          }}
-          onInput={(e) => {
-            const target = e.target as HTMLTextAreaElement;
-            target.style.height = "auto"; // Reset height
-            target.style.height = `${Math.min(target.scrollHeight, 160)}px`; // Grow up to 6.5 lines
-          }}
-          placeholder="Type your message here..."
-          className="resize-none w-full max-w-2xl rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 p-3 pr-10 focus:ring focus:ring-blue-500 focus:outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
-          style={{
-            overflowY: "auto", // Scroll only when exceeding max height
-            maxHeight: "160px", // Limit maximum height to 6.5 lines
-          }}
-        />
-        <button
-          type="submit"
-          disabled={!message.trim() || isLoading}
-          className="absolute right-4 lg:right-48 p-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
-          style={{
-            marginBottom: "8px",
-          }}
+        {/* Text Area */}
+        <form
+          onSubmit={handleSubmit}
+          className="p-4"
         >
-          <Send size={20} />
-        </button>
-      </div>
-    </form>
-
+          <div className="relative flex gap-2 justify-center items-end">
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault(); // Submit the form when Enter is pressed
+                  handleSubmit(e as unknown as React.FormEvent);
+                }
+              }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = "auto"; // Reset height
+                target.style.height = `${Math.min(target.scrollHeight, 160)}px`; // Grow up to 6.5 lines
+              }}
+              placeholder="Type your message here..."
+              className="resize-none w-full max-w-2xl rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 p-3 pr-10 focus:ring focus:ring-blue-500 focus:outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+              style={{
+                overflowY: "auto", // Scroll only when exceeding max height
+                maxHeight: "160px", // Limit maximum height to 6.5 lines
+              }}
+            />
+            <button
+              type="submit"
+              disabled={!message.trim() || isLoading}
+              className="absolute right-4 lg:right-48 p-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
+              style={{
+                marginBottom: "8px",
+              }}
+            >
+              <Send size={20} />
+            </button>
+          </div>
+        </form>
       </div>
     </ErrorBoundary>
-  );
+  );  
 } 
