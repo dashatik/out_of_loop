@@ -54,7 +54,7 @@ export default function Sidebar({
       }`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+      <div className="flex items-center justify-between p-4 ">
         {!isCollapsed && <h2 className="text-lg font-semibold">Chats</h2>}
         <button
           onClick={onToggleCollapse}
@@ -89,17 +89,18 @@ export default function Sidebar({
             </button>
           </div>
 
-          {/* Conversations List */}
-          <div className="overflow-y-auto max-h-[calc(100vh-8rem)]">
-            {sortedConversations.map((conversation) => (
-              <div
-                key={conversation.id}
-                className={`group flex items-center p-4 hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                  selectedConversation?.id === conversation.id
-                    ? "bg-gray-100 dark:bg-gray-800"
-                    : ""
-                }`}
-              >
+		{/* Conversations List */}
+		<div className="overflow-y-auto max-h-[calc(100vh-8rem)]">
+			{sortedConversations.map((conversation) => (
+			<div
+				key={conversation.id}
+				className={`group flex items-center p-4 hover:bg-gray-100 dark:hover:bg-gray-800 ${
+				selectedConversation?.id === conversation.id
+					? "bg-gray-100 dark:bg-gray-800"
+					: ""
+				}`}
+				onClick={() => onSelectConversation(conversation)} // Call onSelectConversation here
+			>
 				{editingId === conversation.id ? (
 				<input
 					type="text"
@@ -122,7 +123,8 @@ export default function Sidebar({
 				/>
 				) : (
 				<button
-					onDoubleClick={() => {
+					onDoubleClick={(e) => {
+					e.stopPropagation(); // Prevent triggering the onClick event
 					setEditingId(conversation.id); // Enable edit mode on double-click
 					setNewTitle(conversation.title); // Populate input with the current title
 					}}
@@ -134,32 +136,42 @@ export default function Sidebar({
 					</div>
 				</button>
 				)}
-                <div className="opacity-0 group-hover:opacity-100 flex gap-1">
-                  <button
-                    onClick={() => setEditingId(conversation.id)}
-                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
-                  >
-                    <Edit2 size={14} />
-                  </button>
-                  <button
-                    onClick={() => onPinConversation(conversation.id)}
-                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
-                  >
-                    <Pin
-                      size={14}
-                      className={conversation.pinned ? "fill-current" : ""}
-                    />
-                  </button>
-                  <button
-                    onClick={() => onDeleteConversation(conversation.id)}
-                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-red-500"
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+				<div className="opacity-0 group-hover:opacity-100 flex gap-1">
+				<button
+					onClick={(e) => {
+					e.stopPropagation(); // Prevent triggering the onClick event
+					setEditingId(conversation.id);
+					}}
+					className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+				>
+					<Edit2 size={14} />
+				</button>
+				<button
+					onClick={(e) => {
+					e.stopPropagation(); // Prevent triggering the onClick event
+					onPinConversation(conversation.id);
+					}}
+					className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+				>
+					<Pin
+					size={14}
+					className={conversation.pinned ? "fill-current" : ""}
+					/>
+				</button>
+				<button
+					onClick={(e) => {
+					e.stopPropagation(); // Prevent triggering the onClick event
+					onDeleteConversation(conversation.id);
+					}}
+					className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-red-500"
+				>
+					<Trash2 size={14} />
+				</button>
+				</div>
+			</div>
+			))}
+		</div>
+
         </>
       )}
     </div>

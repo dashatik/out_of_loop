@@ -242,35 +242,40 @@ export default function ChatArea({ conversation, onUpdateConversation }: ChatAre
           )}
           <div ref={messagesEndRef} />
         </div>
-		<form onSubmit={handleSubmit} className="p-4 border-t dark:border-gray-800">
-		<div className="flex gap-2 justify-center items-center">
-			<input
-			type="text"
-			value={message}
-			onChange={(e) => setMessage(e.target.value)}
-			placeholder="Type a message..."
-			className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 focus:ring focus:ring-blue-500 focus:outline-none w-full max-w-2xl"
-			disabled={isStreaming}
-			/>
-			{isStreaming ? (
-			<button
-				type="button"
-				onClick={handleStopGeneration}
-				className="p-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-			>
-				Stop
-			</button>
-			) : (
-			<button
-				type="submit"
-				disabled={!message.trim() || isLoading}
-				className="p-3 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
-			>
-				<Send size={20} />
-			</button>
-			)}
-		</div>
-		</form>
+        <form onSubmit={handleSubmit} className="p-4 ">
+  <div className="relative flex gap-2 justify-center items-end">
+    <textarea
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault(); // Submit the form when Enter is pressed
+          handleSubmit(e as unknown as React.FormEvent);
+        }
+      }}
+      onInput={(e) => {
+        const target = e.target as HTMLTextAreaElement;
+        target.style.height = "auto"; // Reset height
+        target.style.height = `${Math.min(target.scrollHeight, 160)}px`; // Grow up to 6.5 lines
+      }}
+      placeholder="Type your message here..."
+      className="resize-none w-full max-w-2xl rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 p-3 pr-10 focus:ring focus:ring-blue-500 focus:outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+      style={{
+        overflowY: "auto", // Scroll only when exceeding max height
+        maxHeight: "350px", // Limit maximum height to 6.5 lines
+      }}
+    />
+    <button
+      type="submit"
+      disabled={!message.trim() || isLoading}
+      className="absolute right-6 p-2 bg-blue-500 text-white rounded-lg disabled:opacity-50 hover:bg-blue-600 transition-colors"
+      style={{ marginBottom: "8px" }} // Align with bottom of textarea
+    >
+      <Send size={20} />
+    </button>
+  </div>
+</form>
+
       </div>
     </ErrorBoundary>
   );

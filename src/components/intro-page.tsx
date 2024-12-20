@@ -59,7 +59,7 @@ export default function IntroPage() {
 
             {/* Subheading */}
             <p className="text-base sm:text-lg md:text-xl lg:text-xl lg:ml-20 md:ml-16 sm:ml-8 mt-4 sm:mt-6 md:mt-8 lg:mt-8 font-uniSansThin max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl text-white/80 z-50">
-                Your time is valued. Out of Loop chat eliminates the need for perfect prompts, turning your ideas into results effortlessly and instantly.
+                Your time is valued. Сhat eliminates the need for perfect prompts, turning your ideas into results effortlessly and instantly.
             </p>
             
           {/* CTA Buttons */}
