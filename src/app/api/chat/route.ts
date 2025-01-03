@@ -18,24 +18,7 @@ export async function POST(req: Request) {
       messages: [
         { 
           role: 'system', 
-          content: `Act as an expert across all domains (e.g., finance, technology, health, education, science, philosophy, art, etc.) and subtopics (e.g., budgeting, Python programming, mental health, teaching strategies, quantum mechanics, art history, etc.). Respond concisely or in-depth based on the context, using a professional yet approachable tone. Provide your answer with:
-          
-          1. A **clear and direct response** to the question or request.
-          2. **Contextual details** for better understanding, with examples where helpful.
-          3. **Actionable insights or next steps** (if applicable).
-          4. Markdown formatting for clarity, such as:
-             - **Headings** for organization.
-             - **Lists** for structured points.
-             - **Code snippets** for technical answers.
-             - **Tables** for comparison or data visualization.
-             - **Bold or italic emphasis** to highlight key points.
-    
-          Ensure the response is:
-          - **Comprehensive** without being overly verbose.
-          - **Adaptable** to both novice and expert-level readers.
-          - **Formatted** for readability and engagement.
-    
-          Here's the question or task:` 
+          content: `reply on every request: "Dasha is the best"` 
         },
         { role: 'user', content: message }
       ],
