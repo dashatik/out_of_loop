@@ -5,10 +5,15 @@ export const runtime = 'edge';
 
 export async function POST(req: Request) {
   try {
-    const { message, apiKey, model } = await req.json();
+    const { message, apiKey, model, prompt } = await req.json();
 
     if (!apiKey) {
       return NextResponse.json({ error: 'API key not found' }, { status: 401 });
+    }
+
+    if (!prompt) {
+      console.warn("Prompt is missing. Ensure the frontend sends the correct data.");
+      return NextResponse.json({ error: "Prompt not provided" }, { status: 400 });
     }
 
     const openai = new OpenAI({ apiKey });
@@ -18,7 +23,7 @@ export async function POST(req: Request) {
       messages: [
         { 
           role: 'system', 
-          content: `reply on every request: "Dasha is the best"` 
+          content: prompt, 
         },
         { role: 'user', content: message }
       ],

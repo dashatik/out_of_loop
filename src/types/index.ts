@@ -7,6 +7,14 @@ export type Message = {
   timestamp: number;
 };
 
+export type ChatMode = {
+  id: string;
+  name: string;
+  description: string;
+  prompt: string;
+};
+
+
 export type Conversation = {
   id: string;
   title: string;
@@ -14,6 +22,7 @@ export type Conversation = {
   createdAt: number;
   updatedAt: number;
   pinned?: boolean;
+  chatMode?: ChatMode; // Add chatMode as an optional property
 };
 
 export type User = {

@@ -8,6 +8,7 @@ import { ErrorBoundary } from "./error-boundary";
 import ReactMarkdown from 'react-markdown';
 import { CopyButton } from "./copy-button";
 import { RobotIcon } from "./robot-icon";
+import { chatModes } from "@/config/chat-modes";
 
 interface ChatAreaProps {
   conversation: Conversation | null;
@@ -62,6 +63,14 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
   const [abortController, setAbortController] = React.useState<AbortController | null>(null);
   const [suggestedQueries, setSuggestedQueries] = React.useState<string[]>([]);
 
+  const selectedModePrompt = React.useMemo(() => {
+    if (conversation) {
+      const mode = chatModes.find((m) => m.id === conversation.title.split(" (")[1]?.slice(0, -1));
+      return mode?.prompt || "";
+    }
+    return "";
+  }, [conversation]);
+  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -104,7 +113,7 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
 
       const userMessage: Message = {
         id: Date.now().toString(),
-        content: message,
+        content: `${selectedModePrompt}\n\n${message}`,
         role: 'user',
         timestamp: Date.now(),
       };
