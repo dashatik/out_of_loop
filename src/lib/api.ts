@@ -2,27 +2,33 @@ import { UserSettings } from "@/types";
 import { loadSettings } from "./storage";
 
 export async function sendMessage(
-  message: string, 
+  payload: { message: string; prompt?: string }, // Allow `prompt` to be optional
   onProgress?: (chunk: string) => void,
   signal?: AbortSignal
 ): Promise<string> {
   const settings = loadSettings();
   if (!settings.apiKey) {
-    throw new Error('API key not found. Please add your API key in settings.');
+    throw new Error("API key not found. Please add your API key in settings.");
   }
 
-  try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
+  const body: any = {
+    message: payload.message,
+    apiKey: settings.apiKey,
+    model: settings.model,
+  };
+
+  if (payload.prompt) {
+    body.prompt = payload.prompt; // Include the prompt only if it exists
+  }
+
+try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        message,
-        apiKey: settings.apiKey,
-        model: settings.model
-      }),
-      signal
+      body: JSON.stringify(body),
+      signal,
     });
 
     if (!response.ok) {

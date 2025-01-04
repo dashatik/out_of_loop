@@ -56,6 +56,7 @@ export default function Sidebar({
         title: selectedMode.name, // Use mode name as the default title
         messages: [],
         chatMode: selectedMode, // Attach the selected mode
+        prompt: selectedMode.prompt,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };

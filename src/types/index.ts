@@ -19,10 +19,11 @@ export type Conversation = {
   id: string;
   title: string;
   messages: Message[];
+  chatMode: ChatMode; // Assuming ChatMode is already defined
+  prompt: string;
   createdAt: number;
   updatedAt: number;
   pinned?: boolean;
-  chatMode?: ChatMode; // Add chatMode as an optional property
 };
 
 export type User = {

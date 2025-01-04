@@ -64,11 +64,7 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
   const [suggestedQueries, setSuggestedQueries] = React.useState<string[]>([]);
 
   const selectedModePrompt = React.useMemo(() => {
-    if (conversation) {
-      const mode = chatModes.find((m) => m.id === conversation.title.split(" (")[1]?.slice(0, -1));
-      return mode?.prompt || "";
-    }
-    return "";
+    return conversation?.chatMode?.prompt || "Default prompt"; // Use the stored prompt or a fallback
   }, [conversation]);
   
   const scrollToBottom = () => {
@@ -111,9 +107,11 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
         conversation.title = title;
       }
 
+      const isFirstMessage = conversation.messages.length === 0;
+
       const userMessage: Message = {
         id: Date.now().toString(),
-        content: `${selectedModePrompt}\n\n${message}`,
+        content: message,
         role: 'user',
         timestamp: Date.now(),
       };
@@ -142,13 +140,16 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
       setIsStreaming(true);
 
       await sendMessage(
-        message,
+        {
+          message, // Pass the user's message
+          prompt: selectedModePrompt, // Include prompt only for the first message
+        },
         (chunk) => {
           if (!controller.signal.aborted) {
             aiMessage.content += chunk;
             onUpdateConversation({
               ...finalConversation,
-              messages: finalConversation.messages.map(m =>
+              messages: finalConversation.messages.map((m) =>
                 m.id === aiMessage.id ? aiMessage : m
               ),
             });
