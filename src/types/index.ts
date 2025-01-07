@@ -31,10 +31,10 @@ export type User = {
   name: string;
   email: string;
 };
-
 export type UserSettings = {
   apiKey: string;
-  model: "gpt-3.5-turbo" | "gpt-4" | "claude-3-opus" | "claude-3-sonnet";
+  model: "gpt-3.5-turbo" | "gpt-4" | "claude-3-opus" | "claude-3-sonnet"; // Default model
+  selectedModel?: "gpt-3.5-turbo" | "gpt-4" | "claude-3-opus" | "claude-3-sonnet"; // User-selected model
   theme: "light" | "dark" | "system";
 };
 

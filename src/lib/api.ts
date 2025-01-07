@@ -62,6 +62,8 @@ export async function generateTitle(message: string): Promise<string> {
     throw new Error('API key not found');
   }
 
+  const selectedModel = settings.selectedModel || settings.model || 'gpt-3.5-turbo'; // Default to gpt-3.5-turbo if no model is selected
+
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -69,13 +71,13 @@ export async function generateTitle(message: string): Promise<string> {
       'Authorization': `Bearer ${settings.apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: selectedModel, // Use the dynamically chosen model
       messages: [
         {
           role: 'system',
-          content: 'Generate a short, concise title (max 6 words) for this conversation based on the user message.'
+          content: 'Generate a short, concise title (max 6 words) for this conversation based on the user message.',
         },
-        { role: 'user', content: message }
+        { role: 'user', content: message },
       ],
       max_tokens: 20,
     }),
