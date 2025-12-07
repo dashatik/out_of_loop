@@ -14,6 +14,7 @@
     "ai": "^4.0.13",
     "cookie": "^0.4.2",
     "firebase": "^11.0.2",
+    "firebase-admin": "^13.6.0",
     "framer-motion": "^11.14.4",
     "https-proxy-agent": "^7.0.6",
     "lucide-react": "^0.309.0",

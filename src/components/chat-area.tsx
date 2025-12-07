@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import { CopyButton } from "./copy-button";
 import { RobotIcon } from "./robot-icon";
 import { chatModes } from "@/config/chat-modes";
+import { useAuth } from "./client-wrapper";
 
 interface ChatAreaProps {
   conversation: Conversation | null;
@@ -55,6 +56,7 @@ function getRandomQueries(count: number = 4): string[] {
 }
 
 export default function ChatArea({ conversation, onUpdateConversation, isSidebarCollapsed }: ChatAreaProps) {
+  const { user } = useAuth();
   const [message, setMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isStreaming, setIsStreaming] = React.useState(false);
@@ -143,6 +145,7 @@ export default function ChatArea({ conversation, onUpdateConversation, isSidebar
         {
           message, // Pass the user's message
           prompt: selectedModePrompt, // Include prompt only for the first message
+          userId: user?.uid, // Pass authenticated user ID
         },
         (chunk) => {
           if (!controller.signal.aborted) {

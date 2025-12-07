@@ -12,6 +12,11 @@ node_modules
 
 # Local environment variables
 .env.local
+.env
+.env*.local
+*.key
+*.pem
+service-account*.json
 
 # VSCode settings
 .vscode

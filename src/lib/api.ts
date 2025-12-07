@@ -2,7 +2,7 @@ import { UserSettings } from "@/types";
 import { loadSettings } from "./storage";
 
 export async function sendMessage(
-  payload: { message: string; prompt?: string }, // Allow `prompt` to be optional
+  payload: { message: string; prompt?: string; userId?: string }, // Add userId to payload
   onProgress?: (chunk: string) => void,
   signal?: AbortSignal
 ): Promise<string> {
@@ -11,10 +11,15 @@ export async function sendMessage(
     throw new Error("API key not found. Please add your API key in settings.");
   }
 
+  if (!payload.userId) {
+    throw new Error("User authentication required");
+  }
+
   const body: any = {
     message: payload.message,
     apiKey: settings.apiKey,
     model: settings.model,
+    userId: payload.userId,
   };
 
   if (payload.prompt) {
